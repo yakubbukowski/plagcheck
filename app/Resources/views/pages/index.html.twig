@@ -1,0 +1,202 @@
+{% extends 'base.html.twig' %}
+{%
+set metaParams = {
+'title': page.pageTitle,
+'description': page.pageMetaDescription,
+'keywords': page.pageMetaKeywords,
+'ogImage': page.pageOgImage
+}
+%}
+{% block meta %}
+    {% include 'includes/meta.html.twig' with metaParams %}
+{% endblock %}
+{% block title %}{% endblock %}
+{% block body %}
+    <!--Main Slider-->
+    <section class="main-slider" data-start-height="750" data-slide-overlay="yes">
+        <div class="owl-carousel home-main-slider owl-theme">
+            {% set version = 1 %}
+            {% for slide in slides  %}
+                <div class="item" style="background: url('{{ asset(slide.slideImage) }}')">
+                    <div class="item-shade">
+                        <div class="content-version-{{ version }}">
+                            <div class="item-title main-slider-title title-version-{{ version }}">{{ slide.slideTitle }}</div>
+                            <div class="item-text text-version-{{ version }}">{{ slide.slideText|raw}}</div>
+                            <button class="button-version-{{ version }}"><a href="{{ slide.slideLink }}">{{ 'See All Courses'|trans }}</a></button>
+                        </div>
+                    </div>
+                </div>
+                {% if version==1 %}
+                    {% set version = 2 %}
+                {% else %}
+                    {% set version = 1 %}
+                {% endif %}
+            {% endfor %}
+        </div>
+    </section>
+    <!--End Main Slider-->
+    {% for message in app.flashes('usernotcreate') %}
+        <div class="flash-notice mail-notice">
+            <div class="mail-notice-content">
+                <div class="notice-close"><i class="ti-close"></i></div>
+                <div class="notice-body">
+                    {{ message }}
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    <!--Welcome Section-->
+    <section class="welcome-section">
+        <div class="auto-container">
+            <!--Sec Title-->
+            <div class="sec-title centered">
+                <h2>{{ 'Welcome To'|trans }} <span>Plag<span class="theme_color">Check</span></span></h2>
+                <div class="text">
+                        {{advantageGroup.advantageGroupText|raw}}
+                </div>
+            </div>
+            <div class="row clearfix">
+                {% for advantage in advantages  %}
+                    <!--Services Item-->
+                    <div class="services-style-one col-md-4 col-sm-6 col-xs-12">
+                        <div class="inner-box">
+                            <div class="icon-box">
+                                <i class="{{ advantage.icon.iconCode }}" aria-hidden="true"></i>
+                            </div>
+                            <h3><a href="{{ advantage.advantageLink }}">{{ advantage.advantageTitle }}</a></h3>
+                            <div class="text">{{ advantage.advantageText }}</div>
+                            <a href="{{ advantage.advantageLink }}" class="arrow-box"><span class="fa fa-angle-right"></span></a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+    <!--End Welcome Section-->
+
+
+
+    <div class="color-palate get_started_btn">
+        <div class="color-trigger">
+            <i class="fa fa-step-forward" aria-hidden="true"></i>
+        </div>
+        <div class="color-palate-head">
+            <h6>{{ 'Get Started'|trans }}</h6>
+        </div>
+        <div class="check-div">
+            <p>{{ 'Lorem ipsum dolor sit amet, consectetur adipisicing elit!'|trans }}</p>
+            <a href="{{ path('plag_checker', {"_locale": app.request.locale}) }}"><button class="check-buttton btn-style-two">{{ 'CHECK NOW!!'|trans }}</button></a>
+        </div>
+    </div>
+
+
+    <!--Register Section-->
+    <section class="register-section" style="background-image:url({{ asset('images/resource/1.jpg') }});">
+        <div class="auto-container">
+            <div class="row clearfix">
+                <!--Form Column-->
+                <div class="form-column col-md-5 col-sm-12 col-xs-12">
+                    <div class="form-inner">
+                        <!--Form Title-->
+                        <div class="form-title">
+                            <h2>{{ 'Register Now'|trans }}</h2>
+                            <div class="text">{{ 'Create  your account and browse'|trans }} <br> {{ 'thousand of courses!!'|trans }}</div>
+                            <div class="curved-box"></div>
+                        </div>
+                    </div>
+                </div>
+                <!--Students Column-->
+                <div class="students-column col-md-7 col-sm-12 col-xs-12">
+                    <div class="students-inner">
+                        {{ page.pageText|raw }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--End Register Section-->
+
+    <!--Counter Section-->
+    <section class="counter-section">
+        <div class="auto-container">
+
+            <div class="fact-counter-two">
+                <div class="row clearfix">
+                    {% for count in statisticsCounter  %}
+                        <!--Column-->
+                        <div class="column counter-column col-md-3 col-sm-6 col-xs-12">
+                            <div class="inner">
+                                <div class="icon-box"><span class="{{ count.icon.iconCode }}"></span></div>
+                                <div class="count-outer count-box">
+                                    <span class="count-text" data-speed="{{ random(700)+800 }}" data-stop="{{ count.counterValue }}">0</span>
+                                    <span class="plus-tag">+</span>
+                                </div>
+                                <h4 class="counter-title">{{ count.counterTitle }}</h4>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+        </div>
+    </section>
+    <!--End Counter Section-->
+
+
+    <!--Testimonial Section-->
+    <section class="testimonial-section" style="background-image:url({{ asset(testimonialpage.pageOgImage) }});">
+        <div class="auto-container">
+            <!--Sec Title-->
+            <div class="sec-title centered light">
+                <h2>{{ testimonialpage.pageTitle }}</h2>
+                <div class="text">{{  testimonialpage.pageText|raw }}</div>
+            </div>
+            <div class="two-item-carousel owl-carousel owl-theme">
+                {% for testimonial in testimonials  %}
+                    <!--Testimonial Block-->
+                    <div class="testimonial-block">
+                        <div class="inner-box">
+                            <div class="content">
+                                <div class="image-box"><img src="{{ asset(testimonial.testimonialImage) }}" title="{{ testimonial.testimonialName }}" /></div>
+                                <div class="quote-icon"><span class="icon flaticon-right-quotation-sign"></span></div>
+                                <h4>{{ testimonial.testimonialName }}</h4>
+                                <div class="designation">{{ testimonial.testimonialPosition }}</div>
+                                <div class="text">{{ testimonial.testimonialText }}</div>
+                                <div class="rating">
+                                    {% for i in 0..4  %}
+                                        {% if i<testimonial.testimonialRate %}
+                                            <span class="fa fa-star"></span>
+                                        {% else %}
+                                            <span class="fa fa-star-o"></span>
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+    <!--End Testimonial Section-->
+
+
+    <!--sponsors style One-->
+    <section class="sponsors-style-one">
+        <div class="auto-container">
+            <!--Sponsors Carousel-->
+            <ul class="sponsors-carousel owl-carousel owl-theme">
+                {% for partner in partners  %}
+                    <li class="slide-item">
+                        <figure class="image-box">
+                            <a href="{{ partner.partnerLink }}">
+                                <img src="{{ asset(partner.partnerLogo) }}" alt="{{partner.partnerTitle }}" title="{{ partner.partnerTitle }}">
+                            </a>
+                        </figure>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </section>
+    <!--End Sponsors Style One-->
+{% endblock %}

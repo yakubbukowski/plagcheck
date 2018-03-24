@@ -1,0 +1,131 @@
+{% extends 'base.html.twig' %}
+{%
+set metaParams = {
+'title': page.pageTitle,
+'description': page.pageMetaDescription,
+'keywords': page.pageMetaKeywords,
+'ogImage': page.pageOgImage
+}
+%}
+{% block meta %}
+    {% include 'includes/meta.html.twig' with metaParams %}
+{% endblock %}
+{% block title %}PlagCheck| Check{% endblock %}
+{% block body %}
+    <!--Page Title-->
+    <section class="page-title" style="background-image:url({{ asset(page.pageOgImage) }});">
+        <div class="auto-container">
+            <div class="inner-box">
+                <h1>{{ page.pageTitle }}</h1>
+                <ul class="bread-crumb">
+                    <li><a href="{{ path('homepage') }}">{{ 'Home'|trans }}</a></li>
+                    <li>{{ page.pageTitle }}</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+    <!--End Page Title-->
+    {% for danger_mess in app.flashes('danger') %}
+        <div class="flash-notice mail-notice  z-index-none">
+            <div class="mail-notice-content ">
+                <div class="notice-close"><i class="ti-close"></i></div>
+                <div class="notice-body">
+                    {{ danger_mess }}
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    <!--Services Section-->
+    <section class="services section">
+        <div class="sidebar-page-container">
+            <div class="auto-container">
+                <div class="row clearfix">
+                    <!--Sidebar Side-->
+                    <div class="sidebar-side col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                        <!-- Category Widget -->
+                        <div class="sidebar-widget category-widget">
+                            <div class="sidebar-title"><h2>{{ 'Services'|trans }}</h2></div>
+                            <div class="category-inner">
+                                <ul class="list-category checking-actions-ul">
+                                    <li><button id="upload-file">{{ 'Upload File'|trans }}</button></li>
+                                    <li><button id="check-text">{{ 'Upload Text'|trans }}</button></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-8 col-sm-8 col-xs-12">
+                        <div class="checking-results">
+                            Write Text to Check For Plagiarism
+                        </div>
+                        <form action="{{ path('plag_submit') }}" method="post" enctype="multipart/form-data">
+                            <div class="form-content">
+                                <div class="upload-file"><p class="div-title">{{ 'CHOOSE FILE OR DRAG'|trans }}</p><input onchange="upload_file(this)" name="text-file" class="plagcheck-file-input" title="choose file" type="file"></div>
+                            </div>
+                        </form>
+                        {% if app.flashes('submit') is defined %}
+                            {% for result in app.flashes('submit') %}
+                                <input type="hidden" id="sumbit-input" value="{{ result }}">
+                            {% endfor %}
+                        {% endif %}
+                        <input type="hidden" id="access-token">
+                        <button id="retrieve-button" class="checking-buttons" value="retrieve"><i class="fa fa-file-pdf-o" aria-hidden="true"></i>{{ 'See The Report'|trans }}</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="auto-container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="my-documents">
+                        <table class="table-bordered table-results">
+                            <tr class="result-line">
+                                <td class="width-280 text-bold"><i class="ti-smallcap"></i>{{ 'Document Name'|trans }}</td>
+                                <td class="text-bold" ><i class="ti-calendar"></i>{{ 'Document Submitted'|trans }}</td>
+                                <td class="text-bold actions-td" ><i class="ti-settings"></i>{{ 'Actions'|trans }}</td>
+                            </tr>
+                            {% for document in documents  %}
+                                <tr class="result-line">
+                                    <td>{{ document.DocName }}</td>
+                                    <td>{{ (document.submittedAt is not null or document.submittedAt is not empty) ? document.submittedAt|date("d.m.Y H:i:s"):"N/A" }}</td>
+                                    <td class="actions-td">
+                                        <button class="btn btn-success padding-7px"><a href="{{ path('retrieve_view' ,{'docId':document.docId }) }}"><i class="fa fa-file-pdf-o"></i>{{ 'See The Report'|trans }}</a></button>
+                                        <button class="delete-action"><i class="ti-trash"></i>{{ 'Delete'|trans }}</button>
+                                        <div class="flash-notice mail-notice delete-action-modal">
+                                            <div class="mail-notice-content">
+                                                <div class="notice-close"><i class="ti-close"></i></div>
+                                                <div class="notice-body">
+                                                    <h4>{{ 'Are You Sure You Want to Delete'|trans }}</h4>
+                                                    <button class="close-notice modal-actions-btn">{{ 'No'|trans }}</button>
+                                                    <button class="modal-actions-btn"><a style="color:#ff3d33" href="{{ path('delete_retrieve' ,{'docId':document.docId }) }}">{{ 'Yes'|trans }}</a></button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                            {% endfor %}
+                        </table>
+
+                         {% if docCount >1 %}
+                            <div class="styled-pagination">
+                                <ul class="clearfix">
+                                    {% for i in 1..docCount  %}
+                                        <li><a href="{{ path('plag_checker',{'pageId':i }) }}" {% if i==app.request.attributes.get('pageId') %} class="active"{% endif %}>{{ i }}</a></li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <!--End Services Section-->
+
+    <div class="result-div">
+
+    </div>
+{% endblock %}

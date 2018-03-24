@@ -1,0 +1,171 @@
+{% extends 'base.html.twig' %}
+{%
+set metaParams = {
+'title': page.pageTitle,
+'description': page.pageMetaDescription,
+'keywords': page.pageMetaKeywords,
+'ogImage': page.pageOgImage
+}
+%}
+{% block meta %}
+    {% include 'includes/meta.html.twig' with metaParams %}
+{% endblock %}
+{% block title %}PlagCheck | Features{% endblock %}
+{% block body %}
+
+<!--Page Title-->
+    <section class="page-title" style="background-image:url({{ asset(page.pageOgImage) }});">
+        <div class="auto-container">
+            <div class="inner-box">
+                <h1>{{ page.pageTitle }}</h1>
+                <ul class="bread-crumb">
+                    <li><a href="{{ path('homepage') }}">{{ 'Home'|trans }}</a></li>
+                    <li>{{ page.pageTitle }}</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+<!--End Page Title-->
+
+    {% for feature in features %}
+        {% if feature.listGroup.id == 1 %}
+        <!--writing resources-->
+        <section class="writing-resources">
+            <div class="writing-resources-content no-background">
+                <div class="container">
+                    <div class="row">
+                        <p class="section-title">{{ feature.getFeatureTitle }}</p>
+                        <div class="col-md-10 col-md-offset-1">
+                            <div class="section-text align-center">
+                                {{ feature.getFeatureText|raw }}
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!--End writing resources-->
+        {% elseif feature.listGroup.id == 2 %}
+            <!--writing resources-->
+            <section class="idea-resources" style="background-image:url({{ asset(feature.featureOgImage) }});">
+                <div class="writing-resources-content">
+                    <div class="container">
+                        <div class="row">
+                            <p class="section-title">{{ feature.getFeatureTitle }}</p>
+                            <div class="col-md-10 col-md-offset-1 col-sm-12 col-sm-offset-0">
+                                <div class="section-text">
+                                    <div class="col-md-6 col-sm-6">
+                                        <p class="steps-title">{{ feature.listGroup.listGroupTitle }}</p>
+                                        <ul class="idea-ul-2">
+                                            {% for list in feature.listGroup.list %}
+                                            <li><div><i class="{{ list.icon.iconCode }}" aria-hidden="true"></i></div><div>{{ list.listItemName }}</div></li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                    <div class="col-md-6 col-sm-6">
+                                        <div class="steps-text align-right">{{ feature.featureText|raw  }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!--End writing resources-->
+        {% elseif feature.listGroup.id == 3 %}
+            <!--first steps-->
+            <section class="first-steps">
+                <div class="writing-resources-content no-background">
+                    <div class="container">
+                        <div class="row">
+                            <p class="section-title">{{ feature.getFeatureTitle }}</p>
+                            <div class="col-md-12">
+                                <div class="section-text">
+                                    <ul class="idea-ul-1 col-md-12">
+                                        {% for list in feature.listGroup.list %}
+                                            <li class="col-md-4 col-sm-6 col-xs-12"><div><i class="{{ list.icon.iconCode }}" aria-hidden="true"></i></div><div>{{ list.listItemName }}</div></li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!--End first steps-->
+        {% endif %}
+    {% endfor %}
+
+
+
+<!--Sidebar Page Container-->
+
+<div class="auto-container">
+    <section class="statistics">
+        <h2 class="stat-title">{{ statistics.pageTitle }}</h2>
+        <h4 class="align-center">{{ 'Live Plagiarism Map of Europe (updated daily)'|trans }}</h4>
+        <div id="chartdiv" class="statistics-map">
+        </div>
+        <div class="statistics-text">
+            {{ statistics.pageText|raw }}
+        </div>
+        <a href="{{ path('plag_checker') }}"><button class="statistics-button">{{ 'Check our plagiarism detection service here!'|trans }}</button></a>
+    </section>
+</div>
+
+{% endblock %}
+
+{% block javascripts %}
+    parent()
+    <script>
+        var map = AmCharts.makeChart( "chartdiv", {
+            "type": "map",
+            "theme": "light",
+            "dataProvider": {
+                "map": "worldHigh",
+                "zoomLevel": 3.5,
+                "zoomLongitude": -9,
+                "zoomLatitude": 52,
+                "areas": [
+                    {% for country in countries %}
+                    {
+                        "title": "{{ country.countryTitle }}",
+                        "id": "{{ country.countryId }}",
+                        "color": "{{ country.countryColor }}",
+                        "customData": "{{ country.countyStatistics }}",
+                    },
+                    {% endfor %}
+                ]
+            },
+
+            "areasSettings": {
+                "rollOverOutlineColor": "rgba(51, 51, 51, 0.46)",
+                "rollOverColor": "#8dc63f",
+                "alpha": 0.8,
+                "unlistedAreasAlpha": 0.1,
+                "balloonText": "[[title]] plagiarism score [[customData]]"
+            },
+
+
+            "legend": {
+                "width": "100%",
+                "marginRight": 27,
+                "marginLeft": 27,
+                "equalWidths": false,
+                "backgroundAlpha": 0.5,
+                "backgroundColor": "#FFFFFF",
+                "borderColor": "#ffffff",
+                "borderAlpha": 1,
+                "top": 450,
+                "left": 0,
+                "horizontalGap": 10
+            },
+            "export": {
+                "enabled": true
+            }
+
+        } );
+    </script>
+
+{% endblock %}

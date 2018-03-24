@@ -1,0 +1,116 @@
+<!-- Preloader -->
+<div class="preloader"></div>
+<!-- Main Header -->
+<header class="main-header">
+    <!--Header Top-->
+    <div class="header-top">
+        <div class="auto-container">
+            <div class="clearfix">
+                <div class="top-left">
+                    <div class="position-center">
+                        {{ render(controller('AppBundle:Parts:headerSocial')) }}
+                    </div>
+                </div>
+                <div class="top-right clearfix">
+                    <div class="position-center">
+                        <ul class="language-ul">
+                            <li class="language">
+                                <a class="language_icons" href="{{ path(app.request.get('_route'), app.request.get('_route_params')|merge({'_locale': 'en'})) }}"> EN <img src="{{ asset('images/icons/en.png') }}" width="24px"></a>
+                                <a class="language_icons" href="{{ path(app.request.get('_route'), app.request.get('_route_params')|merge({'_locale': 'gr'})) }}"> GR <img src="{{ asset('images/icons/gr.png') }}" width="24px"></a>
+                            </li>
+                        </ul>
+                        <!--login btn-->
+                        <div class="login-btn">
+                            {% if app.user %}
+                                <a href="{{ path('fos_user_security_logout') }}" class="theme-btn"><i class="fa fa-sign-out" aria-hidden="true"></i>Logout</a>
+                            {% else %}
+                            <a href="{{ path('fos_user_security_login') }}" class="theme-btn"><i class="fa fa-sign-in" aria-hidden="true"></i>Login</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Header-Upper-->
+    <div class="header-upper">
+        <div class="auto-container">
+            <div class="clearfix">
+
+                <div class="pull-left logo-outer">
+                    <div class="logo main_logo"><a href="{{ path('homepage') }}">PLag<span>Check</span><img class="search_logo" src="{{ asset('images/icons/search.png') }}"></a></div>
+                </div>
+
+                <div class="nav-outer clearfix">
+                    <!-- Main Menu -->
+                    <nav class="main-menu">
+                        <div class="navbar-header">
+                            <!-- Toggle Button -->
+                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                        </div>
+
+                        <div class="navbar-collapse collapse clearfix">
+                            <ul class="navigation clearfix right_position">
+                                <li><a href="{{ path('page_features') }}">{{ 'Features'|trans }}</a></li>
+                                <li><a href="{{ path('faq_list') }}">{{ 'FAQ'|trans }}</a></li>
+                                <li><a href="{{ path('page_blog') }}">{{ 'Blog'|trans }}</a></li>
+                                <li><a href="{{ path('plag_checker') }}">{{ 'Plagiarism Scanner'|trans }}</a></li>
+                                <li><a href="{{ path('instructors_list') }}">{{ 'Our Instructors'|trans }}</a></li>
+                                <li><a href="{{ path('page_about') }}">{{ 'About'|trans }}</a></li>
+                                <li><a href="{{ path('page_contact') }}">{{ 'Contact Us'|trans }}</a></li>
+                            </ul>
+                        </div>
+                    </nav>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!--End Header Upper-->
+
+    <!--Sticky Header-->
+    <div class="sticky-header">
+        <div class="auto-container clearfix">
+            <!--Logo-->
+            <div class="logo pull-left">
+                <a href="{{ path('homepage') }}">PLag<span>Check</span><img class="search_logo size_40" src="{{ asset('images/icons/search.png') }}"></a>
+            </div>
+
+            <!--Right Col-->
+            <div class="right-col pull-right">
+                <!-- Main Menu -->
+                <nav class="main-menu">
+                    <div class="navbar-header">
+                        <!-- Toggle Button -->
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                    </div>
+
+                    <div class="navbar-collapse collapse  clearfix">
+                        <ul class="navigation clearfix ">
+                            <li><a href="{{ path('page_features') }}">{{ 'Features'|trans }}</a></li>
+                            <li><a href="{{ path('faq_list') }}">{{ 'FAQ'|trans }}</a></li>
+                            <li><a href="{{ path('page_blog') }}">{{ 'Blog'|trans }}</a></li>
+                            <li><a href="{{ path('plag_checker') }}">{{ 'Plagiarism Scanner'|trans }}</a></li>
+                            <li><a href="{{ path('instructors_list') }}">{{ 'Our Instructors'|trans }}</a></li>
+                            <li><a href="{{ path('page_about') }}">{{ 'About'|trans }}</a></li>
+                            <li><a href="{{ path('page_contact') }}">{{ 'Contact Us'|trans }}</a></li>
+                        </ul>
+                    </div>
+                </nav><!-- Main Menu End-->
+            </div>
+
+        </div>
+    </div>
+    <!--End Sticky Header-->
+
+</header>
+<!--End Main Header -->

@@ -1,0 +1,14 @@
+services:
+    app.check_plag:
+        class: AppBundle\Service\CheckService
+        public: true
+
+    app.admin.partner:
+        class: AppBundle\Admin\PartnerAdmin
+        tags:
+            - {name: sonata.admin, manager_type: orm, group: Partners, label: Partners, on_top: true, icon: '<i class="fa fa-users" ></i>'}
+        arguments:
+            - ~
+            - AppBundle\Entity\Partner
+            - ~
+        public: true

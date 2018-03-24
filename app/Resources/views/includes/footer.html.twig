@@ -1,0 +1,78 @@
+<!--Main Footer-->
+<footer class="main-footer">
+
+    <div class="auto-container">
+        <div class="row clearfix">
+
+            <!--big column-->
+            <div class="big-column col-md-12 col-sm-12 col-xs-12">
+                <div class="row clearfix">
+
+                    <!--Footer Column-->
+                    <div class="footer-column footer-first-column col-md-4 col-sm-4 col-xs-12">
+                        <div class="footer-widget logo-widget">
+                            <div class="widget-content">
+                                <div class="footer_logo "><a href="{{ path('homepage', {"_locale": app.request.locale}) }}">PLag<span>Check</span><img class="size_40" src="{{ asset('images/icons/search.png') }}"></a></div>
+                                <div class="text">{{ render(controller('AppBundle:Parts:footerAbout')) }}...
+                                    <a href="{{ path('page_about') }}">{{ 'View More'|trans }}</a>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--Footer Column / Links Widget-->
+                    <div class="footer-column col-md-4 col-sm-4 col-xs-6">
+                        <div class="footer-widget links-widget">
+                            <h2>Quick Links</h2>
+                            <div class="widget-content">
+                                <div class="row clearfix">
+                                    <ul class="list col-md-7 col-sm-6 col-xs-12">
+                                        <li><a href="{{ path('page_features', {"_locale": app.request.locale}) }}">{{ 'Features'|trans }}</a></li>
+                                        <li><a href="{{ path('faq_list', {"_locale": app.request.locale}) }}">{{ 'FAQ'|trans }}</a></li>
+                                        <li><a href="{{ path('page_blog', {"_locale": app.request.locale}) }}">{{ 'Blog'|trans }}</a></li>
+                                    </ul>
+                                    <ul class="list col-md-5 col-sm-6 col-xs-12">
+                                        <li><a href="{{ path('instructors_list', {"_locale": app.request.locale}) }}">{{ 'Our Instructors'|trans }}</a></li>
+                                        <li><a href="{{ path('page_about', {"_locale": app.request.locale}) }}">{{ 'About'|trans }}</a></li>
+                                        <li><a href="{{ path('page_contact', {"_locale": app.request.locale}) }}">{{ 'Contact Us'|trans }}</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="footer-column col-md-4 col-sm-4 col-xs-6">
+                        <div class="footer-widget address-widget">
+                            <h2>Our Address</h2>
+                            <div class="widget-content">
+                                {{ render(controller('AppBundle:Parts:footerContact')) }}
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!--Footer Bottom-->
+    <div class="footer-bottom">
+        <div class="auto-container">
+            <div class="row clearfix">
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    <div class="copyright"><a href="#"> </a></div>
+                </div>
+                <div class="col-md-6 col-sm-6 col-xs-12" style="margin: 0 0 0 AUTO">
+                    {{ render(controller('AppBundle:Parts:footerSocial')) }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+</footer>
+<!--End pagewrapper-->
+
+<!--Scroll to top-->
+<div class="scroll-to-top scroll-to-target" data-target=".main-header"><span class="icon fa fa-long-arrow-up"></span></div>

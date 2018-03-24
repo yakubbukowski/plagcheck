@@ -1,0 +1,28 @@
+stof_doctrine_extensions:
+    orm:
+        default:
+            sluggable:   true
+            translatable: true
+    class:
+        translatable: Gedmo\Translatable\TranslatableListener
+        sluggable: Gedmo\Sluggable\SluggableListener
+
+
+
+sonata_admin:
+    templates:
+        layout: SonataAdminBundle::layout.html.twig
+        # other configuration options
+        search:              SonataAdminBundle:Core:search.html.twig
+        search_result_block: SonataAdminBundle:Block:block_search_result.html.twig
+
+sonata_translation:
+    locales: [en, gr]
+    default_locale: en
+    # here enable the types you need
+    gedmo:
+        enabled: true
+    knplabs:
+        enabled: false
+
+

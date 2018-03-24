@@ -1,0 +1,23 @@
+{% spaceless %}
+<!DOCTYPE html>
+<html>
+<head>
+    {% block meta %}{% endblock %}
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    {% block stylesheets %}
+
+    {% endblock %}
+</head>
+<body>
+{% include 'includes/header.html.twig' %}
+<div class="page-wrapper">
+    {% block body %}{% endblock %}
+</div>
+{% include 'includes/footer.html.twig' %}
+{% block javascripts %}
+
+
+{% endblock %}
+</body>
+</html>
+{% endspaceless %}

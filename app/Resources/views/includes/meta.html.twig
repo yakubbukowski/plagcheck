@@ -1,0 +1,16 @@
+{% set ogImageDefaultWidth = 1200 %} {% set ogImageDefaultHeight = 630 %}
+{% if ogImageWidth is defined %} {% set ogImageDefaultWidth = ogImageWidth %} {% endif %}
+{% if ogImageHeight is defined %} {% set ogImageDefaultHeight = ogImageHeight %} {% endif %}
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="description" content="{{ description }}">
+<meta name="keywords" content="{{ keywords }}">
+
+<meta property="og:type" content="article"/>
+<meta property="og:url" content="{{ app.request.uri }}"/>
+<meta property="og:image" content="{{ app.request.getSchemeAndHttpHost() ~ asset(ogImage) }}"/>
+<meta property="og:image:width" content="{{ ogImageDefaultWidth }}"/>
+<meta property="og:image:height" content="{{ ogImageDefaultHeight }}"/>
+<meta property="og:title" content="{{ title }} | PlagCheck"/>
+<meta property="og:description" content="{{ description }}"/>
